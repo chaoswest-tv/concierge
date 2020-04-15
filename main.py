@@ -6,9 +6,11 @@ app = Celery('tasks', broker='redis://localhost')
 
 print(server.supervisor.getState())
 
+
 @app.task
 def start_restream(name):
     print(name)
+
 
 @app.task
 def stop_restream(name):
