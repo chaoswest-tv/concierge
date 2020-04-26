@@ -1,17 +1,36 @@
-from celery import Celery
+import os
+import signal
+import sys
+import time
+
+# supervisord xml-rpc connection
 from xmlrpc.client import ServerProxy
-
-server = ServerProxy('http://localhost:9001/RPC2')
-app = Celery('tasks', broker='redis://localhost')
-
-print(server.supervisor.getState())
+svd = ServerProxy('http://127.0.0.1:9001/RPC2')
+identity = os.environ.get('CONCIERGE_IDENTITY', default="develop")
 
 
-@app.task
-def start_restream(name):
-    print(name)
+def sigterm_handler(signum, frame):
+    print("concierge shutting down.")
+    # if concierge dies, all tasks need to die as well!
+
+    sys.exit(0)
 
 
-@app.task
-def stop_restream(name):
-    print(name)
+def loop(config):
+    while True:
+        # do stuff
+        print(svd.supervisor.getAllProcessInfo())
+
+        time.sleep(1)
+
+
+def main():
+    # program setup
+    signal.signal(signal.SIGTERM, sigterm_handler)
+
+    # check connection to supervisord
+    print(svd.supervisor.getState())
+    loop()
+
+
+main()
