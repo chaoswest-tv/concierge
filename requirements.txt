@@ -1,2 +1,2 @@
-celery>=4.4
-redis
+requests
+jinja2

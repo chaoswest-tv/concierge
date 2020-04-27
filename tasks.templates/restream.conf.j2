@@ -1,0 +1,8 @@
+[program:{{ uuid }}]
+directory=/app
+command=/usr/bin/ffmpeg -loglevel repeat+level+info -i {{ edge }}{{ cfg["app"] }}/{{ cfg["stream"] }} -c copy -f flv {{ cfg["target"] }}
+autostart=true
+autorestart=true
+stderr_logfile=/app/tasks.logs/{{ uuid }}.stderr
+stdout_logfile=/app/tasks.logs/{{ uuid }}.stdout
+user=concierge

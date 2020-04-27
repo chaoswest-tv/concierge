@@ -17,6 +17,9 @@ RUN pip install -r requirements.txt
 # add user
 RUN addgroup -S concierge && adduser -S concierge -G concierge
 
+# add supervisord tasks directories
+RUN mkdir -p /app/tasks.d /app/tasks.logs && chown concierge:concierge /app/tasks.d /app/tasks.logs
+
 # add code
 ADD . /app
 
