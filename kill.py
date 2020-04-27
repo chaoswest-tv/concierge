@@ -22,15 +22,15 @@ def main():
         body = dict([pair.split(":") for pair in body.split(" ")])
 
         if body["groupname"] == "concierge":
-           try:
-                   pidfile = open('/run/supervisor.pid','r')
-                   pid = int(pidfile.readline());
-                   os.kill(pid, signal.SIGQUIT)
-           except Exception as e:
-                   write_stdout('could not kill supervisor: %s\n' % e.strerror)
+            try:
+                pidfile = open('/run/supervisor.pid', 'r')
+                pid = int(pidfile.readline())
+                os.kill(pid, signal.SIGQUIT)
+            except Exception as e:
+                write_stdout('could not kill supervisor: %s\n' % e.strerror)
 
         write_stdout('RESULT 2\nOK')
 
 
 if __name__ == '__main__':
-   main()
+    main()

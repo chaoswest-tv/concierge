@@ -28,11 +28,12 @@ interval = 2
 # runtime stuff
 claims = []
 
+
 def svd_update():
     try:
         r = svd.supervisor.reloadConfig()
     except xmlrpc.client.Fault as e:
-        if e.faultCode == 6: # SHUTDOWN_STATE
+        if e.faultCode == 6:  # SHUTDOWN_STATE
             print('svd shutting down')
             return
         else:
@@ -88,7 +89,7 @@ def stop_task(uuid):
     file = '/app/tasks.d/%s.conf' % uuid
     try:
         os.remove(file)
-    except:
+    except:  # noqa
         print('error deleting task configfile', file)
 
     # reload supervisord config
@@ -103,6 +104,7 @@ def release_task(uuid):
         return
 
     stop_task(uuid)
+
 
 def claim_task(uuid):
     global claims
@@ -150,7 +152,6 @@ def loop(config):
             if task.get('type') in skills:
                 claim_task(task.get('uuid'))
                 break
-
 
         time.sleep(interval)
 
