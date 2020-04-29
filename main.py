@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import signal
 import sys
@@ -122,7 +123,7 @@ def claim_task(uuid):
     svd_update()
 
 
-def loop(config):
+def loop():
     global claims
     while True:
         # portier heartbeat
@@ -161,7 +162,7 @@ def main():
     signal.signal(signal.SIGTERM, sigterm_handler)
 
     # check connection to supervisord
-    loop({})
+    loop()
 
 
 main()
